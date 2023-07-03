@@ -2,6 +2,8 @@ from typing import Dict, List, Optional, Type
 
 from langflow.interface.base import LangChainTypeCreator
 from langflow.interface.custom_lists import llm_type_to_cls_dict
+from langflow.interface.llms.custom import CUSTOM_LLMS
+from langflow.custom.customs import get_custom_nodes
 from langflow.settings import settings
 from langflow.template.frontend_node.llms import LLMFrontendNode
 from langflow.utils.logger import logger
@@ -19,11 +21,15 @@ class LLMCreator(LangChainTypeCreator):
     def type_to_loader_dict(self) -> Dict:
         if self.type_dict is None:
             self.type_dict = llm_type_to_cls_dict
+            for name, llm in CUSTOM_LLMS.items():
+                self.type_dict[name] = llm
         return self.type_dict
 
     def get_signature(self, name: str) -> Optional[Dict]:
         """Get the signature of an llm."""
         try:
+            if name in get_custom_nodes(self.type_name).keys():
+                return get_custom_nodes(self.type_name)[name]
             return build_template_from_class(name, llm_type_to_cls_dict)
         except ValueError as exc:
             raise ValueError("LLM not found") from exc

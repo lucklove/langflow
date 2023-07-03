@@ -1,6 +1,7 @@
 import json
 from typing import Optional
 
+from langflow.template.template.base import Template
 from langflow.template.field.base import TemplateField
 from langflow.template.frontend_node.base import FrontendNode
 from langflow.template.frontend_node.constants import CTRANSFORMERS_DEFAULT_CONFIG
@@ -154,3 +155,26 @@ class LLMFrontendNode(FrontendNode):
             "cache",
         ]:
             field.show = True
+
+class PingChatTestLLMFrontendNode(FrontendNode):
+    name: str = 'PingChatTestLLM'
+    template: Template = Template(
+        type_name = "PingChatTestLLM",
+        fields=[
+             TemplateField(
+                field_type="float",
+                required=False,
+                is_list=False,
+                show=True,
+                multiline=False,
+                value="0",
+                name="temperature",
+                advanced=False,
+            ),
+        ],
+    )
+    description: str = "Test LLM"
+    base_classes: list[str] = ["BaseLLM"]
+
+    def to_dict(self):
+        return super().to_dict()

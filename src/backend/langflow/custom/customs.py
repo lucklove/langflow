@@ -2,6 +2,9 @@ from langflow.template import frontend_node
 
 # These should always be instantiated
 CUSTOM_NODES = {
+    "llms": {
+        "PingChatTestLLM": frontend_node.llms.PingChatTestLLMFrontendNode(),
+    },
     "prompts": {
         "ZeroShotPrompt": frontend_node.prompts.ZeroShotPromptNode(),
     },

@@ -105,6 +105,8 @@ embeddings:
   CohereEmbeddings:
     documentation: "https://python.langchain.com/docs/modules/data_connection/text_embedding/integrations/cohere"
 llms:
+  PingChatTestLLM:
+    documentation: ""
   OpenAI:
     documentation: "https://python.langchain.com/docs/modules/model_io/models/llms/integrations/openai"
   ChatOpenAI:
